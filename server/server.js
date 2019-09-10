@@ -4,12 +4,14 @@ const path = require('path');
  
 const app = express();
  
+const port = process.env.PORT || 8080;
+
 // Serve only the static files form the build directory
-app.use(express.static(__dirname + '/build'));
+app.use(express.static(__dirname + '/../build'));
  
 app.get('/*', function(req,res) {
  
-res.sendFile(path.join(__dirname+'/build/index.html'));
+res.sendFile(path.join(__dirname+'/../build/index.html'));
 });
 // Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+app.listen(port, () => console.log(`Server running on port ${port}`));
