@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import UserTest from '../usertest/usertest'
 import Home from '../home/home'
+import UserTest from '../usertest/usertest'
 import Recipes from '../recipes/recipes'
 import Calendar from '../calendar/calendar'
 import Login from '../login/login'
