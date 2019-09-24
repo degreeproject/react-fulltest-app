@@ -1,10 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import UserTest from '../../components/usertest/usertest'
-import Home from '../../components/home/home'
-import Recipes from '../../components/recipes/recipes'
-import Calendar from '../../components/calendar/calendar'
-import Login from '../../components/login/login'
+import UserTest from '../usertest/usertest'
+import Home from '../home/home'
+import Recipes from '../recipes/recipes'
+import Calendar from '../calendar/calendar'
+import Login from '../login/login'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
