@@ -21,6 +21,10 @@
     "start": "node server/server.js",
     "dev": "nodemon server/server.js"
   },
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
   "eslintConfig": {
     "extends": "react-app"
   },
