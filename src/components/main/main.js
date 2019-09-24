@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from '../home/home'
-import UserTest from '../usertest/usertest'
 import Recipes from '../recipes/recipes'
 import Calendar from '../calendar/calendar'
 import Login from '../login/login'
@@ -14,7 +13,6 @@ import Login from '../login/login'
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path='/usertest' component={UserTest}/>
       <Route exact path='/home' component={Home}/>
       <Route exact path='/recipes' component={Recipes}/>
       <Route exact path='/calendar' component={Calendar}/>
