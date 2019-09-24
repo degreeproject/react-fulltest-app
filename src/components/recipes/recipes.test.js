@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UserTest from './usertest';
+import Recipes from './recipes';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<UserTest />, div);
-  ReactDOM.unmountComponentAtNode(div);
 });
