@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import UserTest from '../../components/userTest/userTest'
+import UserTest from '../../components/userTest/usertest'
 import Home from '../../components/home/home'
 import Recipes from '../../components/recipes/recipes'
 import Calendar from '../../components/calendar/calendar'
