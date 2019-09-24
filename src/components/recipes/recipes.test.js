@@ -4,4 +4,6 @@ import Recipes from './recipes';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
+  ReactDOM.render(<Recipes />, div);
+  ReactDOM.unmountComponentAtNode(div);
 });

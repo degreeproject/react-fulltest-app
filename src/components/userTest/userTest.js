@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UserService from '../../services/UserService'
 
-class userTest extends Component {
+class usertest extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,4 +39,4 @@ class userTest extends Component {
   }
   }
 }
-export default userTest;
+export default usertest;
