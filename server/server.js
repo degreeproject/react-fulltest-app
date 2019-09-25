@@ -13,7 +13,7 @@ app.use('/api/recipe', recipe)
 
 app.use(csp({
   directives: {
-    defaultSrc: [`'self'`],
+    defaultSrc: [`*`],
     imgSrc: [`'self'`],
   }
 }))
