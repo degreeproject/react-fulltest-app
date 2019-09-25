@@ -13,9 +13,17 @@ app.use('/api/recipe', recipe)
 
 app.use(csp({
   directives: {
-    imgSrc: [`'self'`]
-  }
+    defaultSrc: [`'self'`],
+    imgSrc: [`'self'`],
+    reportUri: `/api/csp/report`
+  },
+  reportOnly: true
 }))
+
+app.post(`/api/csp/report`, (req, res) => {
+  winston.warn(`CSP header violation`, req.body[`csp-report`])
+  res.status(204).end()
+})
 
 
 const port = config.PORT;
