@@ -15,16 +15,9 @@ app.use(csp({
   directives: {
     defaultSrc: [`'self'`],
     imgSrc: [`'self'`],
-    reportUri: `/api/csp/report`
   },
   reportOnly: true
 }))
-
-app.post(`/api/csp/report`, (req, res) => {
-  winston.warn(`CSP header violation`, req.body[`csp-report`])
-  res.status(204).end()
-})
-
 
 const port = config.PORT;
 
