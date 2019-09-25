@@ -3,12 +3,19 @@ const config = require('./config');
 
 const user = require('./router/api/user');
 const recipe = require('./router/api/recipe');
+const csp = require(`helmet-csp`)
 
 const app = express();
 
 
 app.use('/api/user', user);
 app.use('/api/recipe', recipe)
+
+app.use(csp({
+  directives: {
+    imgSrc: [`'self'`]
+  }
+}))
 
 
 const port = config.PORT;
