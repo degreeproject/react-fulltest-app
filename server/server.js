@@ -3,15 +3,16 @@ const config = require('./config');
 const winston = require('winston')
 const user = require('./router/api/user');
 const recipe = require('./router/api/recipe');
-const csp = require(`helmet-csp`)
+const helmet = require(`helmet`)
 
 const app = express();
+app.use(helmet)
 
 
 app.use('/api/user', user);
 app.use('/api/recipe', recipe)
 
-app.use(csp({
+app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: [`'self'`],
     imgSrc: [`'self'`],
