@@ -1,6 +1,6 @@
 const express = require('express');
 const config = require('./config');
-
+const winston = require('winston')
 const user = require('./router/api/user');
 const recipe = require('./router/api/recipe');
 const csp = require(`helmet-csp`)
@@ -14,9 +14,17 @@ app.use('/api/recipe', recipe)
 app.use(csp({
   directives: {
     defaultSrc: [`'self'`],
-    imgSrc: [`'self'`, 'data: *'],
-  }
+    imgSrc: [`'self'`],
+    reportUri: `/api/csp/report`
+  },
+  reportOnly: true
 }))
+
+app.post(`/api/csp/report`, (req, res) => {
+  winston.warn(`CSP header violation`, req.body[`csp-report`])
+  res.status(204).end()
+})
+
 
 const port = config.PORT;
 
