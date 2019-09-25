@@ -6,11 +6,6 @@ const recipe = require('./router/api/recipe');
 const csp = require(`helmet-csp`)
 
 const app = express();
-
-
-app.use('/api/user', user);
-app.use('/api/recipe', recipe)
-
 app.use(csp({
   directives: {
     defaultSrc: [`'self'`],
@@ -19,6 +14,11 @@ app.use(csp({
   loose: false,
   setAllHeaders: true,
 }))
+
+
+
+app.use('/api/user', user);
+app.use('/api/recipe', recipe)
 
 const port = config.PORT;
 
