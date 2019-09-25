@@ -15,8 +15,7 @@ app.use(csp({
   directives: {
     defaultSrc: [`'self'`],
     imgSrc: [`'self'`],
-  },
-  reportOnly: true
+  }
 }))
 
 const port = config.PORT;
