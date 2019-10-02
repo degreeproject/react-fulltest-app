@@ -21,11 +21,11 @@ const port = config.PORT;
 
 if (process.env.NODE_ENV === 'production') {
 
-  app.use(express.static(__dirname + "/../dist/"));
+  app.use(express.static(__dirname + "/../build/"));
 
   app.get(/.*/, function (req, res) {
-    res.sendFile(path.resolve(__dirname + "/../dist/index.html"))
+    res.sendFile(path.resolve(__dirname + "/../build/index.html"))
   });
 }
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console  
 app.listen(port, () => console.log(`Server running on port ${port}`));
