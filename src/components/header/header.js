@@ -21,13 +21,21 @@ class Header extends Component {
     this.state = {
     };
   }
+  componentDidMount(){
+    if(localStorage.getItem('user')){
+      let token = JSON.parse(localStorage.getItem('user'))
+      console.log(token)
+      this.props.addTokenToState(token)
+    }
+  }
   logout(){
-    this.props.performLogout(); 
     localStorage.clear()
+    this.props.performLogout(); 
   }
   render() {
-    let loaded = (this.props.user) ? true : false
-    if(!loaded){
+    let loggedIn = (this.props.user) ? true : false
+    if(!loggedIn){
+      console.log("not logged in")
       return (
         <div>
           <AppBar position="static">
@@ -54,6 +62,7 @@ class Header extends Component {
         </div>
       );
     }else{
+      console.log(this.props)
       return (
         <div>
           <AppBar position="static">
@@ -89,7 +98,8 @@ class Header extends Component {
     
     const mapDispatchToProps = (dispatch) => {
       return {
-        performLogout: () => dispatch(authAction.logout())
+        performLogout: () => dispatch(authAction.logout()),
+        addTokenToState: token => dispatch(authAction.addToken(token))
       }
     };
 

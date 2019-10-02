@@ -11,7 +11,9 @@ const unauthorizedAccessPaths = [
   // Trying to authenticate
   {route: '/api/auth', method: 'GET'},
   // Get recipes
-  {route: '/api/recipe', method: 'GET'}
+  {route: '/api/recipe', method: 'GET'},
+  //Get all users SHOULD BE REMOVED
+  {route: '/api/user/all', method: 'GET'}
 ];
 
 /**
@@ -128,7 +130,7 @@ const SELF_ACTIONS = [
   {route: /^\/api\/application$/, method: 'PATCH'},
   {route: /^\/api\/skills$/, method: 'GET'},
   {route: /^\/api\/application$/, method: 'GET'},
-  {route: /^\/api\/user$/, method: 'GET'}
+  // {route: /^\/api\/user$/, method: 'GET'}
 ]
 
 /**

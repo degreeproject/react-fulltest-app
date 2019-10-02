@@ -13,3 +13,10 @@ export const logout = () => {
       type: actionTypes.LOGOUT
     }
   };
+export const addToken = (token) => {
+    return {
+      type: actionTypes.ADDTOKEN,
+      token: token,
+      name: token.name,
+    }
+  };

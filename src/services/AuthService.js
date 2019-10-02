@@ -15,7 +15,6 @@ class AuthService {
         return axios.get(AUTH, {
             params: user
         }).then(response => {
-            console.log(response.data)
             return {
                 ...response.data,
             }

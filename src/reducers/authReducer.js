@@ -10,8 +10,12 @@ export default (state = [], action) => {
       ];
       case actionTypes.LOGOUT:
         return [
-          ...state
-        ].filter(function(el) { return el.type !== "LOGIN";}); 
+        ]
+      case actionTypes.ADDTOKEN:
+        return [
+          ...state,
+          Object.assign({}, action),
+        ]
     default:
       return state;
     }
