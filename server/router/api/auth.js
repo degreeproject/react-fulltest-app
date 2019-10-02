@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
             message: "Successful login",
             access_token: token,
             token_type: 'Bearer',
-            name: this.username,
+            name: username,
         });
     } catch (err) {
         if (!(err instanceof Error)) {

@@ -10,13 +10,15 @@ class Home extends Component {
     };
   }
   componentDidMount() {
-  }
+    
+  } 
   render() {
     let loaded = (this.props.user) ? true : false
     if(loaded){
       return (
         <div >
           <h1>Hello: {this.props.user.name}</h1>
+          <h2>Localstorage: {localStorage.getItem('user')}</h2>
         </div>
       );
     }else{

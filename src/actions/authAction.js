@@ -5,7 +5,6 @@ export const login = (user) => {
       type: actionTypes.LOGIN,
       token: user.token,
       name: user.name,
-      loggedIn: user.loggedIn
     }
   };
   

@@ -35,20 +35,16 @@ class Login extends Component {
         access_token: ""
       },
       name: "",
-      loggedIn: Boolean,
     }
     try {
       await AuthService.loginUser(this.state).then(data => {
-        console.log(data)
         user.token.type = data.token_type
         user.token.access_token = data.access_token
         user.name = data.name
-        user.loggedIn = true
 
         this.props.performLogin(user)
       });
       localStorage.setItem('user', JSON.stringify(user))
-      //route to home
       this.props.history.push('/home')
     } catch (err) {
       console.log(err)

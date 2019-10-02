@@ -15,10 +15,9 @@ class AuthService {
         return axios.get(AUTH, {
             params: user
         }).then(response => {
-            // localStorage.setItem('user', JSON.stringify(user));
+            console.log(response.data)
             return {
                 ...response.data,
-                name: user.username,
             }
         })
         // .catch(err => err);
