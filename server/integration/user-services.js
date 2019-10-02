@@ -1,8 +1,10 @@
 const mongodb = require('mongodb');
 const config = require('../config');
 
-class RecipeService {
-   /**
+const DUPL_USER = 11000;
+
+class UserService {
+  /**
    * Loads the user collection from MongoDB
    */
   static async loadUserCollection() {
@@ -17,14 +19,50 @@ class RecipeService {
       const usersCollection = await this.loadUserCollection();
       const users = await usersCollection.find().toArray()
       if (users.length === 0 || !users)
+        // eslint-disable-next-line no-console
         console.log("No users found in getUsers")
       return users;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(err)
     }
   }
+  static async submitUser(newUser) {
+    try {
+      const userCollection = await this.loadUserCollection();
+      await userCollection.insertOne(newUser);
+    } catch (err) {
+      if (err.code === DUPL_USER)
+        throw new Error('A user with that username already exists');
 
-
+      throw new Error('Database error');
+    }
+  }
+  static async authenticateUser(username, password) {
+    try {
+      const userCollection = await this.loadUserCollection();
+      const foundUser = await userCollection.findOne({
+        username
+      }, {
+        projection: {
+          _id: 0,
+          password: 1
+        }
+      });
+      if (!foundUser) {
+        // eslint-disable-next-line no-console
+        console.log('Error in authenticateUser, no user found')
+        throw new Error('No such user');
+      }
+      return (password === foundUser.password);
+    } catch (err) {
+      if (err instanceof Error)
+        throw err;
+      // eslint-disable-next-line no-console
+      console.log('Error in authenticateUser: ', err);
+      throw new Error('Database error');
+    }
+  }
 }
 
-module.exports = RecipeService;
+module.exports = UserService;

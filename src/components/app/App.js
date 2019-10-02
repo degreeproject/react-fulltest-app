@@ -1,18 +1,18 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import Container from '@material-ui/core/Container'
 import Header from '../../components/header/header'
-import Main from '../../components/main/main'
+import View from '../../components/router-view/router-view'
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <Router>
         <Header/>
         <Container>
-        <Main/>
+          <View/>
         </Container>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

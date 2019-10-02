@@ -1,45 +1,96 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './header.css';
 import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { styled } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import * as authAction from '../../actions/authAction';
+import { Box } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
+const MyBox = styled(Box)({
+  flexGrow: 1
+});
+
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this); 
+    this.state = {
+    };
   }
-}));
-
-function Header() {
-  const classes = useStyles();
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <Link className="router-links" to="/home">
-              <IconButton disableRipple = {true} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                TastyRecipes
-              </IconButton>
-            </Link>
-            <div className={classes.root}></div>
-            <Button color="inherit" component={Link} to="/recipes">
-              Recipes
-            </Button>
-            <Button color="inherit" component={Link} to="/calendar">
-              Calendar</Button>
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
-            </Toolbar>
-            </AppBar>
-      </div>
-    );
+  logout(){
+    this.props.performLogout(); 
+    localStorage.clear()
+  }
+  render() {
+    let loaded = (this.props.user) ? true : false
+    if(!loaded){
+      return (
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <Link className="router-links" to="/home">
+                <IconButton disableRipple = {true} edge="start" color="inherit" aria-label="menu">
+                  TastyRecipes
+                </IconButton>
+              </Link>
+              <MyBox></MyBox>
+              <Button color="inherit" component={Link} to="/recipes">
+                Recipes
+              </Button>
+              <Button color="inherit" component={Link} to="/calendar">
+                Calendar</Button>
+              <Button color="inherit" component={Link} to="/login">
+                Login
+              </Button>
+              <Button color="inherit" component={Link} to="/register">
+                Register
+              </Button>
+              </Toolbar>
+              </AppBar>
+        </div>
+      );
+    }else{
+      return (
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <Link className="router-links" to="/home">
+                <IconButton disableRipple = {true} edge="start" color="inherit" aria-label="menu">
+                  TastyRecipes
+                </IconButton>
+              </Link>
+              <MyBox></MyBox>
+              <Button color="inherit" component={Link} to="/recipes">
+                Recipes
+              </Button>
+              <Button color="inherit" component={Link} to="/calendar">
+                Calendar</Button>
+              <Button color="inherit" onClick={this.logout}>
+                 Logout
+              </Button>
+              </Toolbar>
+              </AppBar>
+        </div>
+      );
     }
+  }
+}
 
-export default Header;
+    const mapStateToProps = (state) => {
+      const { authentication } = state
+      return {
+        user: authentication[0]
+      }
+    };
+    
+    const mapDispatchToProps = (dispatch) => {
+      return {
+        performLogout: () => dispatch(authAction.logout())
+      }
+    };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

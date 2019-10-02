@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
 import './home.css';
+import { connect } from 'react-redux';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
+      user: this.props.user,
     };
   }
   componentDidMount() {
   }
-
   render() {
-    var {isLoaded} = this.state
-    if(!isLoaded){
-      return <div>Loading home...</div>
-    }
-    else{
+    let loaded = (this.props.user) ? true : false
+    if(loaded){
       return (
         <div >
+          <h1>Hello: {this.props.user.name}</h1>
         </div>
-    );
-  }
+      );
+    }else{
+      return(
+        <div>
+          <h1>Not logged in</h1>
+        </div>
+      )
+    }
   }
 }
-export default Home;
+const mapStateToProps = (state) => {
+  const { authentication } = state
+  return {
+    user: authentication[0]
+  }
+};
+
+export default connect(mapStateToProps)(Home);
