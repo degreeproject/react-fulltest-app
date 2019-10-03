@@ -24,7 +24,6 @@ class Header extends Component {
   componentDidMount(){
     if(localStorage.getItem('user')){
       let token = JSON.parse(localStorage.getItem('user'))
-      console.log(token)
       this.props.addTokenToState(token)
     }
   }
@@ -35,7 +34,6 @@ class Header extends Component {
   render() {
     let loggedIn = (this.props.user) ? true : false
     if(!loggedIn){
-      console.log("not logged in")
       return (
         <div>
           <AppBar position="static">
@@ -62,7 +60,6 @@ class Header extends Component {
         </div>
       );
     }else{
-      console.log(this.props)
       return (
         <div>
           <AppBar position="static">

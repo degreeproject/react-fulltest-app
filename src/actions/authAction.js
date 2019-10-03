@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 export const login = (user) => {
     return {
       type: actionTypes.LOGIN,
-      token: user.token,
+      token: user,
       name: user.name,
     }
   };

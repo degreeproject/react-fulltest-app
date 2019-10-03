@@ -1,5 +1,4 @@
-import axios from 'axios';
-// import {authHeader} from '../helpers'
+import axios from './RequestObject';
 
 const USER = 'api/user';
 const AUTH = 'api/auth'

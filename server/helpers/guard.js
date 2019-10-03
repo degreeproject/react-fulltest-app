@@ -11,7 +11,7 @@ const unauthorizedAccessPaths = [
   // Trying to authenticate
   {route: '/api/auth', method: 'GET'},
   // Get recipes
-  {route: '/api/recipe', method: 'GET'},
+  // {route: '/api/recipe', method: 'GET'},
   //Get all users SHOULD BE REMOVED
   {route: '/api/user/all', method: 'GET'}
 ];
@@ -79,8 +79,10 @@ router.all(/.*/, async (req, res, next) => {
   token = token.replace('Bearer ', '');
 
   const authAudit = await authenticateToken(token);
-  if (!authAudit.success)
+  console.log(authAudit)
+  if (!authAudit.success){
     return res.status(401).json({message: authAudit.message});
+  }
 
     try {
       const { username } = await decodeUsername(token);
@@ -124,13 +126,9 @@ router.all(/.*/, async (req, res, next) => {
  * Specifies which actions may be taken only
  */ 
 const SELF_ACTIONS = [
-  {route: /^\/api\/application$/, method: 'POST'},
+  {route: /^\/api\/recipe$/, method: 'POST'},
   // Means '/api/application/12331-12312 (ending in only numbers and dashes)
-  {route: /^\/api\/application$/, method: 'DELETE'},
-  {route: /^\/api\/application$/, method: 'PATCH'},
-  {route: /^\/api\/skills$/, method: 'GET'},
-  {route: /^\/api\/application$/, method: 'GET'},
-  // {route: /^\/api\/user$/, method: 'GET'}
+  {route: /^\/api\/recipe$/, method: 'GET'},
 ]
 
 /**
