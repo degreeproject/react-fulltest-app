@@ -13,8 +13,8 @@ class Home extends Component {
     
   } 
   render() {
-    let loaded = (this.props.user) ? true : false
-    if(loaded){
+    let loggedIn = (this.props.user) ? true : false
+    if(loggedIn){
       return (
         <div >
           <h1>Hello: {this.props.user.name}</h1>

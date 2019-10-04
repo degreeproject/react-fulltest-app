@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './header.css';
-import { Link } from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { styled } from '@material-ui/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -42,8 +42,8 @@ class Header extends Component {
   }
   logout(){
     localStorage.clear()
-    this.props.performLogout(); 
-    this.props.history.push('/home')
+    this.props.performLogout();
+    this.props.history.push('/login')
   }
   render() {
     let loggedIn = (this.props.user) ? true : false
@@ -58,7 +58,7 @@ class Header extends Component {
                 </IconButton>
               </Link>
               <MyBox></MyBox>
-              <Button color="inherit" component={Link} to="/recipe">
+              <Button color="inherit" component={Link} to="/recipes">
                 Recipes
               </Button>
               <Button color="inherit" component={Link} to="/calendar">
@@ -115,4 +115,4 @@ class Header extends Component {
       }
     };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

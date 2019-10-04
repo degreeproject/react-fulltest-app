@@ -7,13 +7,14 @@ const config = require('../config');
  */
 const unauthorizedAccessPaths = [
   // Registring a user
-  {route: '/api/user', method: 'POST'},
+  {route: /^\/api\/user$/, method: 'POST'},
   // Trying to authenticate
-  {route: '/api/auth', method: 'GET'},
+  {route: /^\/api\/auth$/, method: 'GET'},
   // Get recipes
-  // {route: '/api/recipe', method: 'GET'},
+  {route: /^\/api\/recipe\/.*$/, method: 'GET'},
+  {route: /^\/api\/recipe$/, method: 'GET'},
   //Get all users SHOULD BE REMOVED
-  {route: '/api/user/all', method: 'GET'}
+  {route: /^\/api\/recipe$/, method: 'GET'},
 ];
 
 /**
@@ -29,8 +30,15 @@ function loggedOutAccess(route, method) {
   * Fancy way of "filtering" out a sought for object by its properties,
   * and if such a object exists, it will not be 'undefined'
   * and the function returns true
-  */
-  return unauthorizedAccessPaths.find(ele => (ele.route === route && ele.method === method)) !== undefined;
+  // */
+  // return unauthorizedAccessPaths.find(ele => (ele.route.match(route) && ele.method === method)) !== undefined;
+
+    // Unsure whether this need to be trimmed. but better to be safe than sorry
+    route = route.trim();
+    const allowed = unauthorizedAccessPaths.find((ele) => {
+      return route.match(ele.route) && method === ele.method;
+    }) !== undefined;
+    return allowed;
 }
 
 /**
@@ -66,11 +74,11 @@ router.all(/.*/, async (req, res, next) => {
   // if (process.env.NODE_ENV !== 'production') {
   //   next();
   // }
-
   if (loggedOutAccess(route, method)) {
+    console.log(route)
+    console.log(method)
     return next();
   }
-
   let token = req.headers.authorization;
   if (!token)
     return res.status(400).json({message: 'ERROR.TOKEN.NOT_SUPPLIED'});
@@ -127,9 +135,6 @@ router.all(/.*/, async (req, res, next) => {
 const SELF_ACTIONS = [
   {route: /^\/api\/recipe$/, method: 'POST'},
   // Means '/api/recipe/12331-12312 (ending in only numbers and dashes)
-  {route: /^\/api\/recipe$/, method: 'GET'},
-
-  {route: /^\/api\/recipe\/.*$/, method: 'GET'},
 ]
 
 /**

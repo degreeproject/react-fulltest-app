@@ -7,7 +7,6 @@ import { styled } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia'
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
@@ -57,14 +56,6 @@ class Recipe extends Component {
     .catch(console.log)
    }
   }
-  // static getIngredients(recipe){
-  //   this.state.recipe.ingredient.map(rec => (
-  //     <ListItem>
-  //       <ListItemText primary={rec.name}/>
-  //       <ListItemText primary={}/>
-  //     </ListItem>
-  //   ))}
-  // }
 
   render() {
     var {isLoaded, recipe} = this.state
@@ -72,7 +63,8 @@ class Recipe extends Component {
       return <div>Loading recipes...</div>
     }
     else{
-      // const ingredients = getIngredients(recipe);
+      let i = 0;
+      let ingredientMultiplier = 1;
       return (
         <Container>
           <MainGrid container spacing={3}>
@@ -80,17 +72,28 @@ class Recipe extends Component {
             <MyCardMedia image={recipe.image}></MyCardMedia>
             </MyGrid>
             <MyGrid item xs={7}>
-            ingredients
+              <h3>Ingredients</h3>
+            {recipe.ingredient.map(ingredient => (
+              //i++ might cause issues, check back if not working in the future. 
+              <ListItem key={i++}>
+                <ListItemText primary={ingredient.name}/>
+                {(ingredient.amount && ingredient.unit) ?
+                  (<ListItemText primary={ingredient.amount * ingredientMultiplier + " " + ingredient.unit} />) : (ingredient.amount) ? <ListItemText primary={ingredient.amount * ingredientMultiplier} /> : (ingredient.unit) ? <ListItemText primary={ingredient.unit}/> : ""}
+              </ListItem>
+            ))}
             </MyGrid>
             <MyGrid item xs={5}>
-            {this.state.recipe.step.map(rec => (
-              <ListItem>
-                <ListItemText primary={rec.description}/>
+            <h3>Instructions</h3>
+            {recipe.step.map(step => (
+              //i++ might cause issues, check back if not working in the future. 
+              <ListItem key={i++}>
+                <ListItemText primary={step.description}/>
               </ListItem>
             ))}
             </MyGrid>
             <MyGrid item xs={12}>
-              Notes
+            <h3>Notes</h3>
+              {recipe.notes}
             </MyGrid>
             <MyGrid item xs={12}>
               Comments
