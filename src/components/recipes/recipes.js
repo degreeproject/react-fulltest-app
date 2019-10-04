@@ -67,7 +67,7 @@ class Recipes extends Component {
     }
 
   render() {
-    var {isLoaded, recipes} = this.state
+    let {isLoaded, recipes} = this.state
     if(!isLoaded){
       return <div>Loading recipes...</div>
     }

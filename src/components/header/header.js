@@ -43,6 +43,7 @@ class Header extends Component {
   logout(){
     localStorage.clear()
     this.props.performLogout(); 
+    this.props.history.push('/home')
   }
   render() {
     let loggedIn = (this.props.user) ? true : false
