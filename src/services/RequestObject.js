@@ -7,7 +7,6 @@ let axiosInstance = require('axios').create({
 /**
  * Adds the authorization header before each request.
  */
-console.log(store.getState())
 axiosInstance.interceptors.request.use(config => {
   if (store.getState().authentication[0]) {
     let token = store.getState().authentication[0].token.token

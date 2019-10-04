@@ -10,5 +10,12 @@ class RecipeService {
             }
         })
     }
+    static getRecipe(id){
+        return axios.get(RECIPE + "/" + id).then(function(response) {
+            return {
+                ...response,
+            }
+        })
+    }
 }
 export default RecipeService;

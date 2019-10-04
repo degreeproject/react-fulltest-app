@@ -13,7 +13,7 @@ export const logout = () => {
       type: actionTypes.LOGOUT
     }
   };
-export const addToken = (token) => {
+  export const addToken = (token) => {
     return {
       type: actionTypes.ADDTOKEN,
       token: token,

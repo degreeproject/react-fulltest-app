@@ -17,9 +17,7 @@ router.post('/', async (req, res) => {
       message: 'Account successfully created!'
     });
   } catch (err) {
-    if (err instanceof Error) {
       return res.sendStatus(500);
-    }
   }
 });
 

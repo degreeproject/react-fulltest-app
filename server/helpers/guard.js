@@ -79,7 +79,6 @@ router.all(/.*/, async (req, res, next) => {
   token = token.replace('Bearer ', '');
 
   const authAudit = await authenticateToken(token);
-  console.log(authAudit)
   if (!authAudit.success){
     return res.status(401).json({message: authAudit.message});
   }
@@ -123,12 +122,14 @@ router.all(/.*/, async (req, res, next) => {
 // }
 
 /**
- * Specifies which actions may be taken only
+ * Specifies which actions may be taken only by oneself
  */ 
 const SELF_ACTIONS = [
   {route: /^\/api\/recipe$/, method: 'POST'},
-  // Means '/api/application/12331-12312 (ending in only numbers and dashes)
+  // Means '/api/recipe/12331-12312 (ending in only numbers and dashes)
   {route: /^\/api\/recipe$/, method: 'GET'},
+
+  {route: /^\/api\/recipe\/.*$/, method: 'GET'},
 ]
 
 /**

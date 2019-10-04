@@ -8,6 +8,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import * as authAction from '../../actions/authAction';
+import * as recipeAction from '../../actions/recipeAction';
+import RecipeService from '../../services/RecipeService';
+
+
 import { Box } from '@material-ui/core';
 
 const MyBox = styled(Box)({
@@ -26,6 +30,15 @@ class Header extends Component {
       let token = JSON.parse(localStorage.getItem('user'))
       this.props.addTokenToState(token)
     }
+    RecipeService.getRecipes()
+    .then((request) => {
+      this.setState({
+        recipes: request.data,
+        isLoaded: true
+      })
+      this.props.addRecipeToState(request.data)
+    })
+    .catch(console.log)
   }
   logout(){
     localStorage.clear()
@@ -44,7 +57,7 @@ class Header extends Component {
                 </IconButton>
               </Link>
               <MyBox></MyBox>
-              <Button color="inherit" component={Link} to="/recipes">
+              <Button color="inherit" component={Link} to="/recipe">
                 Recipes
               </Button>
               <Button color="inherit" component={Link} to="/calendar">
@@ -96,7 +109,8 @@ class Header extends Component {
     const mapDispatchToProps = (dispatch) => {
       return {
         performLogout: () => dispatch(authAction.logout()),
-        addTokenToState: token => dispatch(authAction.addToken(token))
+        addTokenToState: token => dispatch(authAction.addToken(token)),
+        addRecipeToState: recipes => dispatch(recipeAction.addRecipes(recipes))
       }
     };
 
