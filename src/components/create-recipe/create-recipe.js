@@ -29,7 +29,9 @@ export default class Register extends Component {
         amount: "",
         unit: ""
       }],
-      steps: [],
+      steps: [{
+        instruction: ""
+      }],
       notes: ""
     };
   }
@@ -39,13 +41,65 @@ export default class Register extends Component {
   //   && this.state.email.length > 0 && this.state.password.length > 7 && this.state.repeatpassword.length > 7 && this.state.password === this.state.repeatpassword;
   // }
 
-  handleChange = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
+  handleChange = (evt) => {
     this.setState({
-      [event.target.id]: event.target.value
+      [evt.target.id]: evt.target.value
+    })
+  }
+  addIngredient = () => {
+    this.setState({
+      ingredient: this.state.ingredient.concat([{ name: "", amount: "", unit: "" }])
     });
   }
+  removeIngredient = (idx) => {
+    this.setState({
+      ingredient: this.state.ingredient.filter((s, _idx) => _idx !== idx)
+    });
+  }
+  addInstruction = () => {
+    this.setState({
+      steps: this.state.steps.concat([{ name: "" }])
+    });
+  }
+  removeInstruction = (idx) => {
+    this.setState({
+      steps: this.state.steps.filter((s, _idx) => _idx !== idx)
+    });
+  }
+  handleIngredientNameChange = idx => evt => {
+    const newIngredient = this.state.ingredient.map((ingredient, ingidx) => {
+      if (idx !== ingidx) return ingredient;
+      return { ...ingredient, name: evt.target.value };
+    });
+
+    this.setState({ ingredient: newIngredient });
+  };
+  handleIngredientAmountChange = idx => evt => {
+    const newIngredient = this.state.ingredient.map((ingredient, ingidx) => {
+      if (idx !== ingidx) return ingredient;
+      return { ...ingredient, amount: evt.target.value };
+    });
+
+    this.setState({ ingredient: newIngredient });
+  };
+  handleIngredientUnitChange = idx => evt => {
+    const newIngredient = this.state.ingredient.map((ingredient, ingidx) => {
+      if (idx !== ingidx) return ingredient;
+      return { ...ingredient, unit: evt.target.value };
+    });
+
+    this.setState({ ingredient: newIngredient });
+  };
+  handleInstructionStepChange = idx => evt => {
+    console.log()
+    const newInstruction = this.state.steps.map((instruction, ingidx) => {
+      if (idx !== ingidx) return instruction;
+      return { ...instruction, instruction: evt.target.value };
+    });
+
+    this.setState({ instruction: newInstruction });
+  };
+
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -104,30 +158,31 @@ export default class Register extends Component {
                 let ingredientID = `ingredient-${idx}`;
                 let amountID = `amount-${idx}`;
                 let unitID = `unit-${idx}`;
-                console.log(this.state.ingredient[idx])
                 return(
-                  <MyGrid key={idx} item xs={12} container direction="row" alignItems='center' key={idx}>
+                  <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
                     <MyGrid item xs={4}>
                       <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        label="Ingredient"
+                        label={`Ingredient: ${idx + 1}`}
                         value={this.state.ingredient[idx].name}
-                        onChange={this.handleChange}
+                        data-id={idx}
+                        onChange={this.handleIngredientNameChange(idx)}
                         id={ingredientID}
                       />
                     </MyGrid>
                     <MyGrid item xs={4}>
-                      <TextField
+                    <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         label="Amount"
                         value={this.state.ingredient[idx].amount}
-                        onChange={this.handleChange}
+                        data-id={idx}
+                        onChange={this.handleIngredientAmountChange(idx)}
                         id={amountID}
                       />
                     </MyGrid>
@@ -139,39 +194,79 @@ export default class Register extends Component {
                         fullWidth
                         label="Unit"
                         value={this.state.ingredient[idx].unit}
-                        onChange={this.handleChange}
+                        data-id={idx}
+                        onChange={this.handleIngredientUnitChange(idx)}
                         id={unitID}
                       />
                     </MyGrid>
-                    <MyGrid item xs={3}>
-                      <Button 
-                          variant="contained"
-                          color="primary">
-                            add
-                      </Button>
-                    </MyGrid>
+                    {idx === 0 &&
+                     <MyGrid item xs={3}>
+                        <Button 
+                         variant="contained"
+                         color="primary"
+                         onClick={this.addIngredient}
+                          >
+                       add
+                        </Button>
+                      </MyGrid>
+                    }
+                   {idx !== 0 &&
+                     <MyGrid item xs={3}>
+                        <Button 
+                         variant="contained"
+                         color="secondary"
+                         onClick={() => { this.removeIngredient(idx) }}
+                        >
+                       Remove
+                        </Button>
+                      </MyGrid>
+                    }
+
                   </MyGrid>
                 )
             })}
-            <MyGrid item xs={9}>
-              <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Instructions"
-                  value={this.state.steps}
-                  onChange={this.handleChange}
-                  id="steps"
-                />
-            </MyGrid>
-            <MyGrid item xs={3}>
-              <Button 
-                  variant="contained"
-                  color="primary">
-                    add
-              </Button>
-            </MyGrid>
+            {this.state.steps.map((val, idx) => {
+                let instructionID = `instruction-${idx}`;
+                return(
+                  <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
+                    <MyGrid item xs={9}>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        label={`Instruction step: ${idx + 1}`}
+                        value={this.state.steps[idx].instruction}
+                        data-id={idx}
+                        onChange={this.handleInstructionStepChange(idx)}
+                        id={instructionID}
+                        />
+                    </MyGrid>
+                    {idx === 0 &&
+                     <MyGrid item xs={3}>
+                        <Button 
+                         variant="contained"
+                         color="primary"
+                         onClick={this.addInstruction}
+                          >
+                       add
+                        </Button>
+                      </MyGrid>
+                    }
+                   {idx !== 0 &&
+                     <MyGrid item xs={3}>
+                        <Button 
+                         variant="contained"
+                         color="secondary"
+                         onClick={() => { this.removeInstruction(idx) }}
+                        >
+                       Remove
+                        </Button>
+                      </MyGrid>
+                    }
+                  </MyGrid>
+                )
+              })}
             <MyGrid item xs={12}>
               <TextField
                   variant="outlined"
