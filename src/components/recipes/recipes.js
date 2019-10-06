@@ -12,6 +12,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import RecipeService from '../../services/RecipeService'
 import { Container } from '@material-ui/core';
@@ -75,6 +77,11 @@ class Recipes extends Component {
       return (
         <div>
         <MyContainer>
+          <Link to="/create-recipe">
+            <Fab color="primary" aria-label="add">
+              <AddIcon/>
+            </Fab>
+          </Link>
           <MyGridList cellHeight={300} cols={3}>
             {recipes.map(rec => (
               <Link key={rec._id} className="router-links" to={"recipes/" + rec.id}>

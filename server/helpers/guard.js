@@ -75,8 +75,6 @@ router.all(/.*/, async (req, res, next) => {
   //   next();
   // }
   if (loggedOutAccess(route, method)) {
-    console.log(route)
-    console.log(method)
     return next();
   }
   let token = req.headers.authorization;

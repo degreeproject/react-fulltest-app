@@ -6,6 +6,7 @@ import Recipe from '../recipe/recipe'
 import Calendar from '../calendar/calendar'
 import Login from '../login/login'
 import Register from '../register/register'
+import CreateRecipe from '../create-recipe/create-recipe'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -18,6 +19,7 @@ const RouterView = () => (
       <Route exact path='/home' component={Home}/>
       <Route exact path='/recipes/:id' component={Recipe}/>
       <Route exact path='/recipes' component={Recipes}/>
+      <Route exact path='/create-recipe' component={CreateRecipe}/>
       <Route exact path='/calendar' component={Calendar}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/register' component={Register}/>

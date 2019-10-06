@@ -64,12 +64,11 @@ class Recipe extends Component {
     }
     else{
       let i = 0;
-      let ingredientMultiplier = 1;
       return (
         <Container>
           <MainGrid container spacing={3}>
             <MyGrid item xs={5}>
-            <MyCardMedia image={recipe.image}></MyCardMedia>
+              <MyCardMedia image={recipe.image}></MyCardMedia>
             </MyGrid>
             <MyGrid item xs={7}>
               <h3>Ingredients</h3>
@@ -78,7 +77,7 @@ class Recipe extends Component {
               <ListItem key={i++}>
                 <ListItemText primary={ingredient.name}/>
                 {(ingredient.amount && ingredient.unit) ?
-                  (<ListItemText primary={ingredient.amount * ingredientMultiplier + " " + ingredient.unit} />) : (ingredient.amount) ? <ListItemText primary={ingredient.amount * ingredientMultiplier} /> : (ingredient.unit) ? <ListItemText primary={ingredient.unit}/> : ""}
+                  (<ListItemText primary={ingredient.amount + " " + ingredient.unit} />) : (ingredient.amount) ? <ListItemText primary={ingredient.amount} /> : (ingredient.unit) ? <ListItemText primary={ingredient.unit}/> : ""}
               </ListItem>
             ))}
             </MyGrid>
@@ -96,7 +95,7 @@ class Recipe extends Component {
               {recipe.notes}
             </MyGrid>
             <MyGrid item xs={12}>
-              Comments
+            <h3>Comments</h3>
             </MyGrid>
           </MainGrid>
         </Container>
