@@ -33,10 +33,19 @@ export default class Register extends Component {
     event.preventDefault();
     console.log(this.state)
 
+    let user = {
+      username: this.state.username,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
+      password: this.state.password
+    }
     try {
-      await AuthService.registerUser(this.state).then(data => {
+      await AuthService.registerUser(user)
+      .then(data => {
         console.log(data)
       });
+      this.props.history.push('/login')
     } catch (err) {
       console.log(err)
     }
@@ -51,26 +60,26 @@ export default class Register extends Component {
             Sign up
           </Typography>
           <form onSubmit={this.handleSubmit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Username"
-                value={this.state.username}
-                onChange={this.handleChange}
-                id="username"
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                value={this.state.firstname}
-                onChange={this.handleChange}
-                label="Firstname"
-                id="firstname"
-              />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Username"
+              value={this.state.username}
+              onChange={this.handleChange}
+              id="username"
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              value={this.state.firstname}
+              onChange={this.handleChange}
+              label="Firstname"
+              id="firstname"
+            />
 
             <TextField
               variant="outlined"
