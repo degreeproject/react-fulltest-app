@@ -35,7 +35,6 @@ export default class Register extends Component {
 
     try {
       await AuthService.registerUser(this.state).then(data => {
-        //Add token to state or/and cookie?
         console.log(data)
       });
     } catch (err) {

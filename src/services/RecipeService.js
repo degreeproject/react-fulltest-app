@@ -17,5 +17,9 @@ class RecipeService {
             }
         })
     }
+    static submitRecipe(recipe){
+        console.log(recipe)
+        return axios.post(RECIPE, recipe)
+    }
 }
 export default RecipeService;

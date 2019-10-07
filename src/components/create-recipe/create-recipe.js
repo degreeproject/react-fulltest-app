@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 // import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import AuthService from "../../services/AuthService";
+import RecipeService from "../../services/RecipeService";
 
 import Grid from '@material-ui/core/Grid'
 
@@ -36,10 +36,10 @@ export default class Register extends Component {
     };
   }
 
-  validateForm() {
-    return this.state.name.length > 0 && this.state.description.length > 0 && this.state.image.length > 0 
-    && this.state.ingredient.length > 0 && this.state.steps.length > 7 && this.state.notes.length > 7;
-  }
+  // validateForm() {
+  //   return this.state.name.length > 0 && this.state.description.length > 0 && this.state.image.length > 0 
+  //   && this.state.ingredient.length > 0 && this.state.steps.length > 0 && this.state.notes.length > 0;
+  // }
 
   handleChange = (evt) => {
     this.setState({
@@ -106,7 +106,7 @@ export default class Register extends Component {
     console.log(this.state)
 
     try {
-      await AuthService.registerUser(this.state)
+      await RecipeService.submitRecipe(this.state)
     } catch (err) {
       console.log(err)
     }
@@ -189,8 +189,7 @@ export default class Register extends Component {
                     <MyGrid item xs={1}>
                       <TextField
                         variant="outlined"
-                        margin="normal"
-                        required
+                        margin="normal" 
                         fullWidth
                         label="Unit"
                         value={this.state.ingredient[idx].unit}
@@ -283,9 +282,10 @@ export default class Register extends Component {
             <Button
               type="submit"
               fullWidth
-              disabled={!this.validateForm()}
+              // disabled={!this.validateForm()}
               variant="contained"
               color="primary"
+              onClick={this.handleSubmit}
             >
               Create Recipe
             </Button>
