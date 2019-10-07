@@ -19,8 +19,14 @@ export default class Register extends Component {
   }
 
   validateForm() {
-    return this.state.username.length > 0 && this.state.firstname.length > 0 && this.state.lastname.length > 0 
-    && this.state.email.length > 0 && this.state.password.length > 7 && this.state.repeatpassword.length > 7 && this.state.password === this.state.repeatpassword;
+    return (
+      this.state.username.length > 0 &&
+      this.state.firstname.length > 0 && 
+      this.state.lastname.length > 0 &&
+      this.state.email.length > 0 && 
+      this.state.password.length > 7 && 
+      this.state.repeatpassword.length > 7 && 
+      this.state.password === this.state.repeatpassword)
   }
 
   handleChange = event => {
