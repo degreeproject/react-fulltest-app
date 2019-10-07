@@ -36,10 +36,10 @@ export default class Register extends Component {
     };
   }
 
-  // validateForm() {
-  //   return this.state.username.length > 0 && this.state.firstname.length > 0 && this.state.lastname.length > 0 
-  //   && this.state.email.length > 0 && this.state.password.length > 7 && this.state.repeatpassword.length > 7 && this.state.password === this.state.repeatpassword;
-  // }
+  validateForm() {
+    return this.state.name.length > 0 && this.state.description.length > 0 && this.state.image.length > 0 
+    && this.state.ingredient.length > 0 && this.state.steps.length > 7 && this.state.notes.length > 7;
+  }
 
   handleChange = (evt) => {
     this.setState({
@@ -91,13 +91,13 @@ export default class Register extends Component {
     this.setState({ ingredient: newIngredient });
   };
   handleInstructionStepChange = idx => evt => {
-    console.log()
+    console.log(evt.target.value)
     const newInstruction = this.state.steps.map((instruction, ingidx) => {
       if (idx !== ingidx) return instruction;
       return { ...instruction, instruction: evt.target.value };
     });
 
-    this.setState({ instruction: newInstruction });
+    this.setState({ steps: newInstruction });
   };
 
 
@@ -227,6 +227,7 @@ export default class Register extends Component {
             })}
             {this.state.steps.map((val, idx) => {
                 let instructionID = `instruction-${idx}`;
+                console.log(this.state.steps[idx].instruction)
                 return(
                   <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
                     <MyGrid item xs={9}>
@@ -282,7 +283,7 @@ export default class Register extends Component {
             <Button
               type="submit"
               fullWidth
-              // disabled={!this.validateForm()}
+              disabled={!this.validateForm()}
               variant="contained"
               color="primary"
             >
