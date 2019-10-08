@@ -9,6 +9,8 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Container from '@material-ui/core/Container';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import RecipeService from '../../services/RecipeService'
 
@@ -30,11 +32,39 @@ const MyCardMedia = styled(CardMedia)({
 class Recipe extends Component {
   constructor(props) {
     super(props);
+    this.submitComment = this.submitComment.bind(this); 
     this.state = {
       isLoaded: false,
-      recipe: Object
+      recipe: Object,
+      comment: {
+        commentator: '',
+        comment: ''
+      }
     };
   }
+  
+  handleCommentChange = event => {
+    this.setState({
+      comment:{
+        commentator: this.state.comment.commentator,
+        comment: event.target.value
+      }
+    });
+  }
+  validateCommentForm() {
+    return (
+      this.state.comment.comment.length > 0
+    )
+  }
+  submitComment() {
+    RecipeService.submitComment({
+      commentator: this.props.user.name,
+      comment: this.state.comment.comment,
+      recipe: this.state.recipe.id
+    })
+    .catch(console.log)
+  }
+
   componentDidMount() {
     const id = (this.props.location.pathname).replace("/recipes/", "")
     if(this.props.recipe){
@@ -43,7 +73,7 @@ class Recipe extends Component {
     })
     this.setState({
       recipe: recipe,
-      isLoaded: true
+      isLoaded: true,
       })
    }else{
     RecipeService.getRecipe(id)
@@ -64,6 +94,7 @@ class Recipe extends Component {
     }
     else{
       let i = 0;
+      let j = 2000;
       return (
         <Container>
           <MainGrid container spacing={3}>
@@ -95,8 +126,22 @@ class Recipe extends Component {
               {recipe.notes}
             </MyGrid>
             <MyGrid item xs={12}>
-            <h3>Comments</h3>
+              <h3>Comments</h3>
+              <form>
+                <TextField variant="outlined" margin="normal" required fullWidth label="Comment"
+                  value={this.state.comment.comment} onChange={this.handleCommentChange} id="comment" />
+                <Button type="submit" fullWidth disabled={!this.validateCommentForm()} variant="contained" color="primary" onClick={this.submitComment}>
+                  Submit Comment
+                </Button>
+               </form>
             </MyGrid>
+            {recipe.comments.map(comment => (
+              //i++ might cause issues, check back if not working in the future. 
+              <MyGrid key={j++} item xs={12}>
+                <h4>{comment.commentator}</h4>
+                <p>{comment.comment}</p>
+              </MyGrid>
+            ))}
           </MainGrid>
         </Container>
       );
@@ -104,10 +149,10 @@ class Recipe extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { recipe } = state
+  const { recipe, authentication } = state
   return {
-    recipe: recipe[0]
+    recipe: recipe[0],
+    user: authentication[0]
   }
 };
-
 export default connect(mapStateToProps)(Recipe);

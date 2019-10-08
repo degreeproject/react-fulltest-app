@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom'
 import Home from '../home/home'
 import Recipes from '../recipes/recipes'
 import Recipe from '../recipe/recipe'
-import Calendar from '../calendar/calendar'
 import Login from '../login/login'
 import Register from '../register/register'
 import CreateRecipe from '../create-recipe/create-recipe'
@@ -20,7 +19,6 @@ const RouterView = () => (
       <Route exact path='/recipes/:id' component={Recipe}/>
       <Route exact path='/recipes' component={Recipes}/>
       <Route exact path='/create-recipe' component={CreateRecipe}/>
-      <Route exact path='/calendar' component={Calendar}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/register' component={Register}/>
       {/* Matches rest of urls */}

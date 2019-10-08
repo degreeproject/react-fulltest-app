@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongodb = require('mongodb');
 const config = require('../config');
 
@@ -28,7 +29,7 @@ class RecipeService {
     try {
       const recipeCollection = await this.loadRecipeCollection();
       const recipe = await recipeCollection.findOne({id: id})
-      if (recipe.length === 0 || !recipe)
+      if (!recipe || recipe.length === 0)
         console.log("No recipes found in getRecipes")
       return recipe;
     } catch (err) {
@@ -39,7 +40,18 @@ class RecipeService {
   static async submitRecipe(recipe) {
     try {
       const recipeCollection = await this.loadRecipeCollection();
-      await recipeCollection.insertOne(recipe);
+      const newRecipe = {
+        name: recipe.name,
+        id: recipe.name.replace(/ /g, "-").toLowerCase(),
+        description: recipe.description,
+        image: recipe.image,
+        ingredient: recipe.ingredient,
+        step: recipe.step,
+        notes: recipe.notes,
+        comments: []
+      };
+
+      await recipeCollection.insertOne(newRecipe);
     } catch (err) {
       if (err.code === DUPL_RECIPETITLE)
         throw new Error('A recipe with that title already exists').code(500);
@@ -49,6 +61,20 @@ class RecipeService {
   }
 
 
+  static async submitComment(comment) {
+    try {
+      const recipeCollection = await this.loadRecipeCollection();
+      const newcomment = {
+        commentator: comment.commentator,
+        comment: comment.comment
+      };
+      await recipeCollection.updateOne(
+        {id: comment.recipe},
+        {$push: { comments: newcomment}});
+    } catch (err) {
+      throw new Error('Database error').code(500);
+    }
+  }
 }
 
 module.exports = RecipeService;

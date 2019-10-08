@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 
 import { styled } from '@material-ui/styles';
 
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,22 +17,18 @@ import AddIcon from '@material-ui/icons/Add';
 import RecipeService from '../../services/RecipeService'
 import { Container } from '@material-ui/core';
 
-
-const MyGridList = styled(GridList)({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'space-around',
-  overflow: 'hidden',
-  width: '60%',
-  height: '50%',
-
-  // backgroundColor: theme.palette.background.paper,
+const MyGrid = styled(Grid)({
+  textAlign: 'center',
+});
+const MainGrid = styled(Grid)({
+  textAlign: 'center',
+  marginTop: '5%'
 });
 const MyContainer = styled(Container)({
   marginTop: '5%'
-  // backgroundColor: theme.palette.background.paper,
 });
 const MyCard = styled(Card)({
+  minWidth: 345,
   maxWidth: 345,
 });
 const MyCardMedia = styled(CardMedia)({
@@ -82,11 +77,11 @@ class Recipes extends Component {
               <AddIcon/>
             </Fab>
           </Link>
-          <MyGridList cellHeight={300} cols={3}>
+          <MainGrid container spacing={1} cols={12}>
             {recipes.map(rec => (
               <Link key={rec._id} className="router-links" to={"recipes/" + rec.id}>
-              <GridListTile cols={1}>
-                   <MyCard className="height: 200">
+              <MyGrid item xs={12}>
+                <MyCard className="height: 200">
                     <CardActionArea>
                       <MyCardMedia
                         className="maxWidth: 345"
@@ -103,10 +98,10 @@ class Recipes extends Component {
                       </CardContent>
                     </CardActionArea>
                   </MyCard>
-              </GridListTile>
+              </MyGrid>
             </Link>
             ))}
-          </MyGridList>
+          </MainGrid>
         </MyContainer>
         </div>
       );

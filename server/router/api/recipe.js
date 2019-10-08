@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 const express = require('express');
 const recipeService = require('../../integration/recipe-services');
 const router = express.Router();
-const config = require('../../config');
 
 /**
  * GET: a single recipe
@@ -33,6 +33,17 @@ router.post('/', async (req, res) =>{
     await recipeService.submitRecipe(req.body)
     return res.status(201).json({
       message: 'Recipe successfully created!'
+    });
+  }catch(err){
+    console.log(err)
+  }
+})
+
+router.post('/comment', async (req, res) =>{
+  try{
+    await recipeService.submitComment(req.body)
+    return res.status(201).json({
+      message: 'Comment successfully created!'
     });
   }catch(err){
     console.log(err)

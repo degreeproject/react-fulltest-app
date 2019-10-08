@@ -18,7 +18,6 @@ class Home extends Component {
       return (
         <div >
           <h1>Hello: {this.props.user.name}</h1>
-          <h2>Localstorage: {localStorage.getItem('user')}</h2>
         </div>
       );
     }else{

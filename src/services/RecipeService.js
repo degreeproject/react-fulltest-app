@@ -1,6 +1,7 @@
 import axios from './RequestObject'
 
 const RECIPE = '/api/recipe'
+const COMMENT = '/api/recipe/comment'
 
 class RecipeService {
     static getRecipes(){
@@ -18,8 +19,10 @@ class RecipeService {
         })
     }
     static submitRecipe(recipe){
-        console.log(recipe)
         return axios.post(RECIPE, recipe)
+    }
+    static submitComment(comment){
+        return axios.post(COMMENT, comment)
     }
 }
 export default RecipeService;

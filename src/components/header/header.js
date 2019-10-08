@@ -61,8 +61,6 @@ class Header extends Component {
               <Button color="inherit" component={Link} to="/recipes">
                 Recipes
               </Button>
-              <Button color="inherit" component={Link} to="/calendar">
-                Calendar</Button>
               <Button color="inherit" component={Link} to="/login">
                 Login
               </Button>
