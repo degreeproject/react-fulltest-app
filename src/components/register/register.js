@@ -37,7 +37,6 @@ export default class Register extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    console.log(this.state)
 
     let user = {
       username: this.state.username,
@@ -48,9 +47,8 @@ export default class Register extends Component {
     }
     try {
       await AuthService.registerUser(user)
-      .then(data => {
-        console.log(data)
-      });
+      // .then(data => {
+      // });
       this.props.history.push('/login')
     } catch (err) {
       console.log(err)

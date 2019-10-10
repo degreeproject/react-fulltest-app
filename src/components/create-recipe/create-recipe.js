@@ -91,7 +91,6 @@ export default class Register extends Component {
     this.setState({ ingredient: newIngredient });
   };
   handleInstructionStepChange = idx => evt => {
-    console.log(evt.target.value)
     const newInstruction = this.state.steps.map((instruction, ingidx) => {
       if (idx !== ingidx) return instruction;
       return { ...instruction, instruction: evt.target.value };
@@ -103,8 +102,6 @@ export default class Register extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    console.log(this.state)
-
     try {
       await RecipeService.submitRecipe(this.state)
     } catch (err) {
@@ -226,7 +223,6 @@ export default class Register extends Component {
             })}
             {this.state.steps.map((val, idx) => {
                 let instructionID = `instruction-${idx}`;
-                console.log(this.state.steps[idx].instruction)
                 return(
                   <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
                     <MyGrid item xs={9}>
