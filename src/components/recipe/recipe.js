@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { styled } from '@material-ui/styles';
 
+import Comment from './comment/comment'
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia'
 import Container from '@material-ui/core/Container';
@@ -136,11 +137,7 @@ class Recipe extends Component {
                </form>
             </MyGrid>
             {recipe.comments.map(comment => (
-              //i++ might cause issues, check back if not working in the future. 
-              <MyGrid key={j++} item xs={12}>
-                <h4>{comment.commentator}</h4>
-                <p>{comment.comment}</p>
-              </MyGrid>
+              <Comment key={j++} comment={comment}></Comment>
             ))}
           </MainGrid>
         </Container>
