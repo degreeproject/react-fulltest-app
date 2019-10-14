@@ -14,7 +14,7 @@ const port = config.PORT;
 
 app.use(bodyParser.json());
 
-/* Authenticates each */
+/* Authenticates each request */
 app.use(/\/api\/.{1,}/, guard);
 
 app.use('/api/user', user);
