@@ -3,6 +3,7 @@ import './header.css';
 import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { styled } from '@material-ui/styles';
+import { Box } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -10,9 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import * as authAction from '../../actions/authAction';
 import * as recipeAction from '../../actions/recipeAction';
 import RecipeService from '../../services/RecipeService';
-
-
-import { Box } from '@material-ui/core';
 
 const MyBox = styled(Box)({
   flexGrow: 1
@@ -85,8 +83,6 @@ class Header extends Component {
               <Button color="inherit" component={Link} to="/recipes">
                 Recipes
               </Button>
-              <Button color="inherit" component={Link} to="/calendar">
-                Calendar</Button>
               <Button color="inherit" onClick={this.logout}>
                  Logout
               </Button>

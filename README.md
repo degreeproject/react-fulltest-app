@@ -1,68 +1,170 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project overview
+This is for a degree project done at the Royal Institute of Technology in Stockholm 2019. The contributers for this assignment are: Nicklas Ockelberg and Niclas Olsson
 
-## Available Scripts
+Continue reading for information about continuing development, or running the application.
 
-In the project directory, you can run:
+Visit the application at: https://react-fulltest-app.herokuapp.com/
 
-### `npm start`
+# Running the app
+#### Start in local development
+Run this commmand in the root directory
+```bash
+npm install
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Then run this command in the root directory
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```bash
+npm run serve
+```
 
-### `npm test`
+And then run this command in the root directory
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm run dev
+```
+The app is now up and running, now browse to the url suggested by the Vue cli
 
-### `npm run build`
+------
+#### Start in local production
+First make sure you have all the environment variables set as suggested [here](#configuring-environment-variables)
+Especially making sure that the NODE_ENV is set to production.
+Run this commmand in the root directory
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Then run this command in the root directory
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```bash
+npm run build
+```
+Then run this command in the root directory
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm run start
+```
+The app is now up and running on localhost
 
-### `npm run eject`
+------
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# About the project
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Front-end
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Configuring environment variables
+This application is dependent on some environment variables which have to be set in order for the application to work correctly. These configs can be found in the server directory in the config.js file.
 
-## Learn More
+In bash you can set your environment variables with the export command:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+export DBUSER=yourUser
+export DBPW=yourPW
+export BASE_URL=yourbaseurl
+export PORT=yourport
+export NODE_ENV=developmentorproduction
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Back-end
+The back-end is a REST API and [Express](https://expressjs.com/) is used as the web framework. 
 
-### Code Splitting
+### Database
+The database used in the project is a MongoDB hosted at mLab. MongoDB databases are, unless something else is the focus, ideal for Node applications, since the saved documents are basically JSON objects which are native to NodeJS.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+#### Database Schema
+Two collections are used: **user** and **recipes**.
+Required fields are marked with [req], optional: [opt]. Followed by the Datatype and comments.
+Fields which are [opt] should not contain null, undefined or any "empty" value. If omitted the field should not exist.
 
-### Analyzing the Bundle Size
+##### Users-collection
+```
+{
+  "username": **[req]** String,
+  "password": **[req]** String,
+  "firstname": **[req]** String,
+  "lastname": **[req]** String,
+  "email": **[req]** String,
+}
+```
+##### Recipes-collection
+```
+{
+  "name": **[req]** String,
+  "id": **[req]** String,
+  "description": **[req]** String,
+  "image": **[req]** String,
+  "ingredient": **[req]** Array,
+  "step": **[req]** Array,
+  "notes": **[opt]** String,
+  "comments": **[opt]** Array,
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Authorization Guard
+To protect the data there are 2 levels of authorization, 1 being the highest, 2 lowest.
+1. Authorized user
+2. Unauthorized user
+The access is checked from 2 up to 1. And once a users authorization-level has been approved for the specified action/endpoint, the request handled.
 
-### Making a Progressive Web App
+Which authorization levels are required for which endpoints/action are showed in the [API endpoints section](#api-endpoints-and-methods).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+# API Endpoints and methods
+The way this application communicates from client side to the server side is by utilizing Axios as our HTTP-client making request to our backend. We have three endpoints that we use and these are seperated for different areas of the application. These areas are for handling recipes, users and authentication. 
 
-### Advanced Configuration
+From the client side the communications always goes through something we call a "service" which is from which our Axios request are made. Based on which method is called Axios targets the appropriate API route on the server side. If we for example want to add a recipe Axios will target the /api/recipe endpoint. After the backend finishes whatever Axios requested from it Axios will return the result to the caller.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Working with our API endpoints
+As previously stated we have the three endpoints that we can utilize, these look as following ```api/auth```, ```api/recipe``` and ```api/user```. We will now go through them and look at the possible methods that you can use. 
 
-### Deployment
+### Handling authentication
+```api/auth```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Method | Route | Description | Minimum Permissions
+------------ | ------------- | ------------- | ------------- 
+ | **GET** | / | Authenticates a user and gives it a token which it can use to authorize itself | Unauthorized
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### Usage
+```GET api/auth/```
+##### Response
+```json
+{
+  "message": "Successfully logged in",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "name": "Username",
+}
+```
+
+
+
+### Handling recipes
+```api/recipe```
+
+Method | Route | Description | Minimum Permissions
+------------ | ------------- | ------------- | ------------- 
+| **GET** | / | Gets all the recipes in the database | Unauthorized
+**GET** | /:id | Gets the recipe that the id corresponds to | Unauthorized
+**POST** | / | Adds a recipe to the database | Logged In 
+**POST** | /comment | Adds a comment to the recipe with the corresponding id to the database | Logged In 
+
+### Handling users
+
+```api/user```
+
+Method | Route | Description | Minimum Permissions
+------------ | ------------- | ------------- | ------------- 
+**POST** | / | Creates a new user | Unauthorized 
+
+#### ```POST api/user/```
+##### Parameters: NO
+
+##### Response:
+```json
+{
+    "message": "Account successfully created!"
+}
+  ```
+
+------
