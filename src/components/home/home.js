@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './home.css';
 import { connect } from 'react-redux';
+import './home.css';
 
 class Home extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class Home extends Component {
     if(loggedIn){
       return (
         <div >
-          <h1>Hello: {this.props.user.name}</h1>
+          <h1>Hello: {this.props.user.name}, welcome to TastyRecipes!</h1>
         </div>
       );
     }else{
@@ -29,6 +29,9 @@ class Home extends Component {
     }
   }
 }
+/**
+ * Maps the Redux state so that the global state is available through the local props in this component
+ */
 const mapStateToProps = (state) => {
   const { authentication } = state
   return {

@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import './recipe.css';
 import { connect } from 'react-redux';
-
 import { styled } from '@material-ui/styles';
+import {Grid, CardMedia, Container, ListItem, ListItemText, TextField, Button } from '@material-ui/core';
 
+import './recipe.css';
 import Comment from './comment/comment'
-import Grid from '@material-ui/core/Grid';
-import CardMedia from '@material-ui/core/CardMedia'
-import Container from '@material-ui/core/Container';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
 import RecipeService from '../../services/RecipeService'
 
 
@@ -27,8 +19,6 @@ const MyCardMedia = styled(CardMedia)({
   height: 0,
   paddingTop: '56.25%', // 16:9
 });
-
-
 
 class Recipe extends Component {
   constructor(props) {
@@ -100,30 +90,31 @@ class Recipe extends Component {
         <Container>
           <MainGrid container spacing={3}>
             <MyGrid item xs={5}>
-              <MyCardMedia image={recipe.image}></MyCardMedia>
+              <MyCardMedia image={recipe.image} />
             </MyGrid>
             <MyGrid item xs={7}>
               <h3>Ingredients</h3>
-            {recipe.ingredient.map(ingredient => (
-              //i++ might cause issues, check back if not working in the future. 
+              {recipe.ingredient.map(ingredient => (
               <ListItem key={i++}>
-                <ListItemText primary={ingredient.name}/>
+                <ListItemText primary={ingredient.name} />
                 {(ingredient.amount && ingredient.unit) ?
-                  (<ListItemText primary={ingredient.amount + " " + ingredient.unit} />) : (ingredient.amount) ? <ListItemText primary={ingredient.amount} /> : (ingredient.unit) ? <ListItemText primary={ingredient.unit}/> : ""}
+                (
+                <ListItemText primary={ingredient.amount + " " + ingredient.unit} />) : (ingredient.amount) ?
+                <ListItemText primary={ingredient.amount} /> : (ingredient.unit) ?
+                <ListItemText primary={ingredient.unit} /> : ""}
               </ListItem>
-            ))}
+              ))}
             </MyGrid>
             <MyGrid item xs={5}>
-            <h3>Instructions</h3>
-            {recipe.step.map(step => (
-              //i++ might cause issues, check back if not working in the future. 
+              <h3>Instructions</h3>
+              {recipe.step.map(step => (
               <ListItem key={i++}>
-                <ListItemText primary={step.description}/>
+                <ListItemText primary={step.description} />
               </ListItem>
-            ))}
+              ))}
             </MyGrid>
             <MyGrid item xs={12}>
-            <h3>Notes</h3>
+              <h3>Notes</h3>
               {recipe.notes}
             </MyGrid>
             <MyGrid item xs={12}>
@@ -131,13 +122,14 @@ class Recipe extends Component {
               <form>
                 <TextField variant="outlined" margin="normal" required fullWidth label="Comment"
                   value={this.state.comment.comment} onChange={this.handleCommentChange} id="comment" />
-                <Button type="submit" fullWidth disabled={!this.validateCommentForm()} variant="contained" color="primary" onClick={this.submitComment}>
+                <Button type="submit" fullWidth disabled={!this.validateCommentForm()} variant="contained"
+                  color="primary" onClick={this.submitComment}>
                   Submit Comment
                 </Button>
-               </form>
+              </form>
             </MyGrid>
             {recipe.comments.map(comment => (
-              <Comment key={j++} comment={comment}></Comment>
+            <Comment key={j++} comment={comment}></Comment>
             ))}
           </MainGrid>
         </Container>
@@ -145,6 +137,11 @@ class Recipe extends Component {
     }
   }
 }
+
+
+/**
+ * Maps the Redux state so that the global state is available through the local props in this component
+ */
 const mapStateToProps = (state) => {
   const { recipe, authentication } = state
   return {

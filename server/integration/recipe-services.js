@@ -14,7 +14,9 @@ class RecipeService {
     });
     return client.db('kex-test-app').collection('recipes');
   }
-  // Gets all the recipes from the database
+  /**
+   * Gets all the recipes from the database
+   */
   static async getRecipes() {
     try {
       const recipeCollection = await this.loadRecipeCollection();
@@ -27,7 +29,10 @@ class RecipeService {
     }
   }
 
-  // Gets a specific recipe from the database with the corresponding id
+  /**
+   * Gets a specific recipe from the database with the corresponding id
+   * @param {*} id The id of the recipe that is going to be fetched
+   */
   static async getRecipe(id) {
     try {
       const recipeCollection = await this.loadRecipeCollection();
@@ -40,7 +45,9 @@ class RecipeService {
     }
   }
 
-  // Adds a recipe to the database
+  /**
+   * Adds a recipe to the database
+   */
   static async submitRecipe(recipe) {
     try {
       const recipeCollection = await this.loadRecipeCollection();
@@ -64,7 +71,10 @@ class RecipeService {
     }
   }
 
-  // Adds a comment to the recipe with the same id as the comment.recipe field.
+  /**
+   * Adds a comment to the recipe with the same id as the comment.recipe field.
+   * @param {*} comment The comment object that is being added to the database
+   */
   static async submitComment(comment) {
     try {
       const recipeCollection = await this.loadRecipeCollection();

@@ -19,8 +19,12 @@ app.use(/\/api\/.{1,}/, guard);
 
 app.use('/api/user', user);
 app.use('/api/recipe', recipe);
-app.use('/api/auth', auth)
+app.use('/api/auth', auth);
 
+/**
+ * If NODE_ENV is set to production the server will take responsibility for serving 
+ * the built version of the app located in the build directory.
+ */
 if (process.env.NODE_ENV === 'production') {
 
   app.use(express.static(__dirname + "/../build/"));

@@ -26,12 +26,6 @@ const unauthorizedAccessPaths = [
  * @returns {Boolean} Whether or not the access is permitted.
  */
 function loggedOutAccess(route, method) {
-  /*
-  * "filtering" out a sought for object by its properties,
-  * and if such an object exists, it will not be 'undefined'
-  * and the function returns true
-  // */
-
     route = route.trim();
     const allowed = unauthorizedAccessPaths.find((ele) => {
       return route.match(ele.route) && method === ele.method;

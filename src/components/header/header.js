@@ -3,11 +3,7 @@ import './header.css';
 import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { styled } from '@material-ui/styles';
-import { Box } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import { Box, AppBar, Toolbar, Button, IconButton } from '@material-ui/core';
 import * as authAction from '../../actions/authAction';
 import * as recipeAction from '../../actions/recipeAction';
 import RecipeService from '../../services/RecipeService';
@@ -94,13 +90,19 @@ class Header extends Component {
   }
 }
 
+    /**
+     * Maps the Redux state so that the global state is available through the local props in this component
+     */
     const mapStateToProps = (state) => {
       const { authentication } = state
       return {
         user: authentication[0]
       }
     };
-    
+
+    /**
+     * Maps the functions available in Redux so that they are accessible in this component
+     */
     const mapDispatchToProps = (dispatch) => {
       return {
         performLogout: () => dispatch(authAction.logout()),

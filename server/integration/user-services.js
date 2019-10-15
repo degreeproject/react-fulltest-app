@@ -14,7 +14,10 @@ class UserService {
     });
     return client.db('kex-test-app').collection('users');
   }
-  // Adds a user to the database
+  /**
+   * Adds a user to the database
+   * @param {*} newUser The new user to be added
+   */
   static async submitUser(newUser) {
     try {
       const userCollection = await this.loadUserCollection();
@@ -27,7 +30,9 @@ class UserService {
     }
   }
 
-  // Authenticates a user with the username and password passed
+  /**
+   * Authenticates a user with the username and password passed
+   */
   static async authenticateUser(username, password) {
     try {
       const userCollection = await this.loadUserCollection();

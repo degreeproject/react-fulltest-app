@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import './recipes.css';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-
 import { styled } from '@material-ui/styles';
 
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card'
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Typography from '@material-ui/core/Typography';
-import Fab from '@material-ui/core/Fab';
+import{Grid, Card, CardMedia, CardContent, 
+       CardActionArea, Typography, Fab, Container
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
+import './recipes.css';
 import RecipeService from '../../services/RecipeService'
-import { Container } from '@material-ui/core';
 
 const MyGrid = styled(Grid)({
   textAlign: 'center',
@@ -70,44 +64,42 @@ class Recipes extends Component {
     }
     else{
       return (
-        <div>
         <MyContainer>
           <Link to="/create-recipe">
-            <Fab color="primary" aria-label="add">
-              <AddIcon/>
-            </Fab>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
           </Link>
           <MainGrid container spacing={1} cols={12}>
             {recipes.map(rec => (
-              <Link key={rec._id} className="router-links" to={"recipes/" + rec.id}>
-              <MyGrid item xs={12}>
-                <MyCard className="height: 200">
-                    <CardActionArea>
-                      <MyCardMedia
-                        className="maxWidth: 345"
-                        image={rec.image}
-                        title={rec.name}
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {rec.name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          {rec.description}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </MyCard>
-              </MyGrid>
+            <Link key={rec._id} className="router-links" to={"recipes/" + rec.id}>
+            <MyGrid item xs={12}>
+              <MyCard className="height: 200">
+                <CardActionArea>
+                  <MyCardMedia className="maxWidth: 345" image={rec.image} title={rec.name} />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {rec.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {rec.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </MyCard>
+            </MyGrid>
             </Link>
             ))}
           </MainGrid>
         </MyContainer>
-        </div>
       );
     }
   }
 }
+
+/**
+ * Maps the Redux state so that the global state is available through the local props in this component
+ */
 const mapStateToProps = (state) => {
   const { recipe } = state
   return {

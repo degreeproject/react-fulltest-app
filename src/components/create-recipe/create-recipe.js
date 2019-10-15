@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 
 import { styled } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-// import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import {Button, TextField, Container, Grid} from '@material-ui/core';
 import RecipeService from "../../services/RecipeService";
-
-import Grid from '@material-ui/core/Grid'
 
 const MyGrid = styled(Grid)({
   textAlign: 'center',
@@ -36,10 +31,14 @@ export default class Register extends Component {
     };
   }
 
-  // validateForm() {
-  //   return this.state.name.length > 0 && this.state.description.length > 0 && this.state.image.length > 0 
-  //   && this.state.ingredient.length > 0 && this.state.steps.length > 0 && this.state.notes.length > 0;
-  // }
+  validateForm() {
+    return this.state.name.length > 0 &&
+           this.state.description.length > 0 &&
+           this.state.image.length > 0 &&
+           this.state.ingredient.length > 0 &&
+           this.state.steps.length > 0 && 
+           this.state.notes.length > 0;
+  }
 
   handleChange = (evt) => {
     this.setState({
@@ -99,7 +98,6 @@ export default class Register extends Component {
     this.setState({ steps: newInstruction });
   };
 
-
   handleSubmit = async event => {
     event.preventDefault();
     try {
@@ -111,184 +109,99 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
-        <Container>
+      <Container>
         <h1>Create a recipe</h1>
-          <MainGrid justify="center" alignItems='center' container spacing={3}>
-            <MyGrid item xs={5}>
-              <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Title"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  id="name"
-                />
+        <MainGrid justify="center" alignItems='center' container spacing={3}>
+          <MyGrid item xs={5}>
+            <TextField variant="outlined" margin="normal" required fullWidth label="Title" value={this.state.name}
+              onChange={this.handleChange} id="name" />
+          </MyGrid>
+          <MyGrid item xs={7}>
+            <TextField variant="outlined" margin="normal" required fullWidth label="Description"
+              value={this.state.description} onChange={this.handleChange} id="description" />
+          </MyGrid>
+          <MyGrid item xs={12}>
+            <TextField variant="outlined" margin="normal" required fullWidth label="Image URL"
+              value={this.state.image} onChange={this.handleChange} id="image" />
+          </MyGrid>
+          {this.state.ingredient.map((val, idx) => {
+          let ingredientID = `ingredient-${idx}`;
+          let amountID = `amount-${idx}`;
+          let unitID = `unit-${idx}`;
+          return(
+          <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
+            <MyGrid item xs={4}>
+              <TextField variant="outlined" margin="normal" required fullWidth label={`Ingredient: ${idx + 1}`}
+                value={this.state.ingredient[idx].name} data-id={idx} onChange={this.handleIngredientNameChange(idx)}
+                id={ingredientID} />
             </MyGrid>
-            <MyGrid item xs={7}>
-              <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Description"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                  id="description"
-                />
+            <MyGrid item xs={4}>
+              <TextField variant="outlined" margin="normal" required fullWidth label="Amount"
+                value={this.state.ingredient[idx].amount} data-id={idx}
+                onChange={this.handleIngredientAmountChange(idx)} id={amountID} />
             </MyGrid>
-            <MyGrid item xs={12}>
-              <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Image URL"
-                  value={this.state.image}
-                  onChange={this.handleChange}
-                  id="image"
-                />
+            <MyGrid item xs={1}>
+              <TextField variant="outlined" margin="normal" fullWidth label="Unit"
+                value={this.state.ingredient[idx].unit} data-id={idx} onChange={this.handleIngredientUnitChange(idx)}
+                id={unitID} />
             </MyGrid>
-            {this.state.ingredient.map((val, idx) => {
-                let ingredientID = `ingredient-${idx}`;
-                let amountID = `amount-${idx}`;
-                let unitID = `unit-${idx}`;
-                return(
-                  <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
-                    <MyGrid item xs={4}>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label={`Ingredient: ${idx + 1}`}
-                        value={this.state.ingredient[idx].name}
-                        data-id={idx}
-                        onChange={this.handleIngredientNameChange(idx)}
-                        id={ingredientID}
-                      />
-                    </MyGrid>
-                    <MyGrid item xs={4}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label="Amount"
-                        value={this.state.ingredient[idx].amount}
-                        data-id={idx}
-                        onChange={this.handleIngredientAmountChange(idx)}
-                        id={amountID}
-                      />
-                    </MyGrid>
-                    <MyGrid item xs={1}>
-                      <TextField
-                        variant="outlined"
-                        margin="normal" 
-                        fullWidth
-                        label="Unit"
-                        value={this.state.ingredient[idx].unit}
-                        data-id={idx}
-                        onChange={this.handleIngredientUnitChange(idx)}
-                        id={unitID}
-                      />
-                    </MyGrid>
-                    {idx === 0 &&
-                     <MyGrid item xs={3}>
-                        <Button 
-                         variant="contained"
-                         color="primary"
-                         onClick={this.addIngredient}
-                          >
-                       add
-                        </Button>
-                      </MyGrid>
-                    }
-                   {idx !== 0 &&
-                     <MyGrid item xs={3}>
-                        <Button 
-                         variant="contained"
-                         color="secondary"
-                         onClick={() => { this.removeIngredient(idx) }}
-                        >
-                       Remove
-                        </Button>
-                      </MyGrid>
-                    }
-
-                  </MyGrid>
-                )
-            })}
-            {this.state.steps.map((val, idx) => {
-                let instructionID = `instruction-${idx}`;
-                return(
-                  <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
-                    <MyGrid item xs={9}>
-                      <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        label={`Instruction step: ${idx + 1}`}
-                        value={this.state.steps[idx].instruction}
-                        data-id={idx}
-                        onChange={this.handleInstructionStepChange(idx)}
-                        id={instructionID}
-                        />
-                    </MyGrid>
-                    {idx === 0 &&
-                     <MyGrid item xs={3}>
-                        <Button 
-                         variant="contained"
-                         color="primary"
-                         onClick={this.addInstruction}
-                          >
-                       add
-                        </Button>
-                      </MyGrid>
-                    }
-                   {idx !== 0 &&
-                     <MyGrid item xs={3}>
-                        <Button 
-                         variant="contained"
-                         color="secondary"
-                         onClick={() => { this.removeInstruction(idx) }}
-                        >
-                       Remove
-                        </Button>
-                      </MyGrid>
-                    }
-                  </MyGrid>
-                )
-              })}
-            <MyGrid item xs={12}>
-              <TextField
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  label="Notes"
-                  value={this.state.notes}
-                  onChange={this.handleChange}
-                  id="notes"
-                />
+            {idx === 0 &&
+            <MyGrid item xs={3}>
+              <Button variant="contained" color="primary" onClick={this.addIngredient}>
+                add
+              </Button>
             </MyGrid>
-            <MyGrid>
-            <Button
-              type="submit"
-              fullWidth
-              // disabled={!this.validateForm()}
-              variant="contained"
-              color="primary"
-              onClick={this.handleSubmit}
-            >
+            }
+            {idx !== 0 &&
+            <MyGrid item xs={3}>
+              <Button variant="contained" color="secondary" onClick={()=> { this.removeIngredient(idx) }}
+                >
+                Remove
+              </Button>
+            </MyGrid>
+            }
+          </MyGrid>
+          )
+          })}
+          {this.state.steps.map((val, idx) => {
+          let instructionID = `instruction-${idx}`;
+          return(
+          <MyGrid key={idx} item xs={12} container direction="row" alignItems='center'>
+            <MyGrid item xs={9}>
+              <TextField variant="outlined" margin="normal" required fullWidth label={`Instruction step: ${idx + 1}`}
+                value={this.state.steps[idx].instruction} data-id={idx}
+                onChange={this.handleInstructionStepChange(idx)} id={instructionID} />
+            </MyGrid>
+            {idx === 0 &&
+            <MyGrid item xs={3}>
+              <Button variant="contained" color="primary" onClick={this.addInstruction}>
+                add
+              </Button>
+            </MyGrid>
+            }
+            {idx !== 0 &&
+            <MyGrid item xs={3}>
+              <Button variant="contained" color="secondary" onClick={()=> { this.removeInstruction(idx) }}
+                >
+                Remove
+              </Button>
+            </MyGrid>
+            }
+          </MyGrid>
+          )
+          })}
+          <MyGrid item xs={12}>
+            <TextField variant="outlined" margin="normal" fullWidth label="Notes" value={this.state.notes}
+              onChange={this.handleChange} id="notes" />
+          </MyGrid>
+          <MyGrid>
+            <Button type="submit" fullWidth disabled={!this.validateForm()} variant="contained" color="primary"
+              onClick={this.handleSubmit}>
               Create Recipe
             </Button>
-            </MyGrid>
-          </MainGrid>
-        </Container>
-      </div>
+          </MyGrid>
+        </MainGrid>
+      </Container>
     );
   }
 }
