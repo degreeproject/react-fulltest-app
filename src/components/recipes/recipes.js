@@ -22,8 +22,8 @@ const MyContainer = styled(Container)({
   marginTop: '5%'
 });
 const MyCard = styled(Card)({
-  minWidth: 345,
-  maxWidth: 345,
+  minWidth: 360,
+  maxWidth: 360,
 });
 const MyCardMedia = styled(CardMedia)({
   height: 0,
