@@ -48,13 +48,20 @@ class Recipe extends Component {
       this.state.comment.comment.length > 0
     )
   }
-  submitComment() {
-    RecipeService.submitComment({
-      commentator: this.props.user.name,
-      comment: this.state.comment.comment,
-      recipe: this.state.recipe.id
-    })
-    .catch(console.log)
+  submitComment = async event =>  {
+  event.preventDefault();
+  //TODO: Add so that the comment gets added to state after successful submit. 
+    try {
+      await RecipeService.submitComment({
+        commentator: this.props.user.name,
+        comment: this.state.comment.comment,
+        recipe: this.state.recipe.id
+      }).then((res) => {
+        return res;
+      })
+    }catch (err) {
+      console.log(err)
+    }
   }
 
   componentDidMount() {
