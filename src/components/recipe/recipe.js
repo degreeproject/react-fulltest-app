@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { styled } from '@material-ui/styles';
 import {Grid, CardMedia, Container, ListItem, ListItemText, TextField, Button } from '@material-ui/core';
+import Ingredients from './ingredients/ingredients'
 
 import './recipe.css';
 import Comment from './comment/comment'
@@ -64,14 +65,14 @@ class Recipe extends Component {
     })
     this.setState({
       recipe: recipe,
-      isLoaded: true,
+      loaded: true,
       })
    }else{
     RecipeService.getRecipe(id)
     .then((request) => {
       this.setState({
         recipe: request.data,
-        isLoaded: true
+        loaded: true
       })
     })
     .catch(console.log)
@@ -79,8 +80,8 @@ class Recipe extends Component {
   }
 
   render() {
-    var {isLoaded, recipe} = this.state
-    if(!isLoaded){
+    var {loaded, recipe} = this.state
+    if(!loaded){
       return <div>Loading recipes...</div>
     }
     else{
@@ -89,23 +90,14 @@ class Recipe extends Component {
       return (
         <Container>
           <MainGrid container spacing={3}>
+
             <MyGrid item xs={5}>
               <MyCardMedia image={recipe.image} />
             </MyGrid>
-            <MyGrid item xs={7}>
-              <h3>Ingredients</h3>
-              {recipe.ingredient.map(ingredient => (
-              <ListItem key={i++}>
-                <ListItemText primary={ingredient.name} />
-                {(ingredient.amount && ingredient.unit) ?
-                (
-                <ListItemText primary={ingredient.amount + " " + ingredient.unit} />) : (ingredient.amount) ?
-                <ListItemText primary={ingredient.amount} /> : (ingredient.unit) ?
-                <ListItemText primary={ingredient.unit} /> : ""}
-              </ListItem>
-              ))}
-            </MyGrid>
-            <MyGrid item xs={5}>
+
+            <Ingredients ingredients={recipe.ingredient} id={i}/>
+
+            <MyGrid item xs={12}>
               <h3>Instructions</h3>
               {recipe.step.map(step => (
               <ListItem key={i++}>
@@ -113,10 +105,12 @@ class Recipe extends Component {
               </ListItem>
               ))}
             </MyGrid>
+            
             <MyGrid item xs={12}>
               <h3>Notes</h3>
               {recipe.notes}
             </MyGrid>
+
             <MyGrid item xs={12}>
               <h3>Comments</h3>
               <form>
@@ -128,6 +122,7 @@ class Recipe extends Component {
                 </Button>
               </form>
             </MyGrid>
+            
             {recipe.comments.map(comment => (
             <Comment key={j++} comment={comment}></Comment>
             ))}
