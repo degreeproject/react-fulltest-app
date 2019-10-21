@@ -51,6 +51,7 @@ The app is now up and running on localhost
 # About the project
 
 ## Front-end
+The front end is a Single Page Application written in React. A Single-page Application is very fast for the user after the initial load.
 
 
 # Configuring environment variables
@@ -66,6 +67,18 @@ export PORT=yourport
 export NODE_ENV=developmentorproduction
 ```
 
+####Material-UI
+Material-UI has been used in order to create the CSS for the web application. This library is based on Material Design and is great for keeping the application looking decent without much effort.
+
+####React Router
+In order to navigate to different pages in a Single Page Application, the React Router is used. 
+
+####Redux
+To manage state which the whole or multiple parts of the application shares, Redux is used. This allows for a central but encapsulated storage which is easly debuggable during development.
+
+####Axios
+In order to handle HTTP requests a third-party package known as Axios is used. Axios handles the HTTP requests using promises which is how it manages to handle the HTTP request asynchronously. 
+
 ## Back-end
 The back-end is a REST API and [Express](https://expressjs.com/) is used as the web framework. 
 
@@ -74,7 +87,7 @@ The database used in the project is a MongoDB hosted at mLab. MongoDB databases 
 
 #### Database Schema
 Two collections are used: **user** and **recipes**.
-Required fields are marked with [req], optional: [opt]. Followed by the Datatype and comments.
+Required fields are marked with [req], optional: [opt]. Followed by the Datatype and potential comments.
 Fields which are [opt] should not contain null, undefined or any "empty" value. If omitted the field should not exist.
 
 ##### Users-collection
@@ -105,7 +118,7 @@ Fields which are [opt] should not contain null, undefined or any "empty" value. 
 To protect the data there are 2 levels of authorization, 1 being the highest, 2 lowest.
 1. Authorized user
 2. Unauthorized user
-The access is checked from 2 up to 1. And once a users authorization-level has been approved for the specified action/endpoint, the request handled.
+The access is checked from 2 up to 1. And once a users authorization-level has been approved for the specified action/endpoint, the request gets handled.
 
 Which authorization levels are required for which endpoints/action are showed in the [API endpoints section](#api-endpoints-and-methods).
 
@@ -127,6 +140,14 @@ Method | Route | Description | Minimum Permissions
 
 #### Usage
 ```GET api/auth/```
+##### Parameters:
+```json
+{
+  "username": "username",
+  "password": "password",
+}
+```
+
 ##### Response
 ```json
 {
@@ -140,6 +161,7 @@ Method | Route | Description | Minimum Permissions
 
 
 ### Handling recipes
+
 ```api/recipe```
 
 Method | Route | Description | Minimum Permissions
@@ -148,6 +170,118 @@ Method | Route | Description | Minimum Permissions
 **GET** | /:id | Gets the recipe that the id corresponds to | Unauthorized
 **POST** | / | Adds a recipe to the database | Logged In 
 **POST** | /comment | Adds a comment to the recipe with the corresponding id to the database | Logged In 
+
+#### Usage
+```GET api/recipe/```
+##### Parameters: NO
+##### Response
+```json
+[
+  {
+  "_id": "id",
+  "name": "Recipe name",
+  "id": "String id",
+  "description": "A description",
+  "image": "IMG-URL",
+  "ingredient": [
+      {
+      "amount": "amount",
+      "unit": "unit",
+      "name": "name"
+      },
+      ...
+  ],
+  "step": [
+      {
+      "description": "description"
+      },
+      ...
+  ],
+  "notes": "Notes",
+  "comments": [],
+  }
+], ...
+```
+
+#### Usage
+```GET api/recipe/:id```
+##### Parameters: NO
+##### Response
+```json
+{
+  "_id": "id",
+  "name": "Recipe name",
+  "id": "String id",
+  "description": "A description",
+  "image": "IMG-URL",
+  "ingredient": [
+      {
+      "amount": "amount",
+      "unit": "unit",
+      "name": "name"
+      },
+      ...
+  ],
+  "step": [
+      {
+      "description": "description"
+      },
+      ...
+  ],
+  "notes": "Notes",
+  "comments": [],
+}
+```
+#### Usage
+```POST api/recipe/```
+##### Parameters:
+```json
+{
+  "_id": "id",
+  "name": "Recipe name",
+  "id": "String id",
+  "description": "A description",
+  "image": "IMG-URL",
+  "ingredient": [
+      {
+      "amount": "amount",
+      "unit": "unit",
+      "name": "name",
+      },
+      ...
+  ],
+  "step": [
+      {
+      "description": "description"
+      },
+      ...
+  ],
+  "notes": "Notes",
+  "comments": [],
+}
+```
+#####Response
+```json
+{
+  "message": "Recipe successfully created!"
+}
+```
+```POST api/recipe/comment```
+##### Parameters:
+```json
+{
+  "comment": "comment",
+  "commentator": "Commentator",
+  "recipe": "String id"
+}
+```
+##### Response
+```json
+{
+  "message": "Comment successfully created!"
+}
+```
+
 
 ### Handling users
 
@@ -158,13 +292,22 @@ Method | Route | Description | Minimum Permissions
 **POST** | / | Creates a new user | Unauthorized 
 
 #### ```POST api/user/```
-##### Parameters: NO
+##### Parameters:
+```json
+{
+  "username": "Username",
+  "firstname": "Firstname",
+  "lastname": "Lastname",
+  "password": "Password",
+  "email": "Email",
+}
+```
 
 ##### Response:
 ```json
 {
-    "message": "Account successfully created!"
+  "message": "Account successfully created!"
 }
-  ```
+```
 
 ------
