@@ -23,7 +23,7 @@ And then run this command in the root directory
 ```bash
 npm run dev
 ```
-The app is now up and running, now browse to the url suggested by the Vue cli
+The app is now up and running, now browse to the url suggested by the React CLI
 
 ------
 #### Start in local production
