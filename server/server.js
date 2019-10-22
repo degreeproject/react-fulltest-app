@@ -10,6 +10,7 @@ const guard =  require('./helpers/guard');
 
 const app = express();
 const port = config.PORT;
+const env = config.ENV;
 
 
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ app.use('/api/auth', auth);
  * If NODE_ENV is set to production the server will take responsibility for serving 
  * the built version of the app located in the build directory.
  */
-if (process.env.NODE_ENV === 'production') {
+if (env === 'production') {
 
   app.use(express.static(__dirname + "/../build/"));
 
