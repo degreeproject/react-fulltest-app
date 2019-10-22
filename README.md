@@ -67,16 +67,16 @@ export PORT=yourport
 export NODE_ENV=developmentorproduction
 ```
 
-####Material-UI
+#### Material-UI
 Material-UI has been used in order to create the CSS for the web application. This library is based on Material Design and is great for keeping the application looking decent without much effort.
 
-####React Router
+#### React Router
 In order to navigate to different pages in a Single Page Application, the React Router is used. 
 
-####Redux
+#### Redux
 To manage state which the whole or multiple parts of the application shares, Redux is used. This allows for a central but encapsulated storage which is easly debuggable during development.
 
-####Axios
+#### Axios
 In order to handle HTTP requests a third-party package known as Axios is used. Axios handles the HTTP requests using promises which is how it manages to handle the HTTP request asynchronously. 
 
 ## Back-end
