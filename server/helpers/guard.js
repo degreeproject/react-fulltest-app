@@ -10,7 +10,7 @@ const unauthorizedAccessPaths = [
   // Registring a user
   {route: /^\/api\/user$/, method: 'POST'},
   // Authenticate a user
-  {route: /^\/api\/auth$/, method: 'GET'},
+  {route: /^\/api\/auth$/, method: 'POST'},
   // Get recipe by id
   {route: /^\/api\/recipe\/.*$/, method: 'GET'},
   // Get all recipes

@@ -11,9 +11,8 @@ class AuthService {
         return axios.post(USER, user)
     }
     static loginUser(user) {
-        return axios.get(AUTH, {
-            params: user
-        }).then(response => {
+        return axios.post(AUTH, user)
+        .then(response => {
             return {
                 ...response.data,
             }

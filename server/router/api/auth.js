@@ -3,25 +3,14 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const router = express.Router();
 const userService = require('../../integration/user-services');
-const {
-    validationResult
-} = require('express-validator');
-
-
 
 /**
  * GET: Authenticates based on the credentials that got passed in the request. 
  * Also returns a token to the user for future authentications.
  */
-router.get('/', async (req, res) => {
-    const result = validationResult(req);
-
-    if (!result.isEmpty()) {
-        return res.status(400).json("Validation error");
-    }
-
-    let username = req.query.username;
-    let password = req.query.password;
+router.post('/', async (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
 
     let authenticated = null;
     try {
