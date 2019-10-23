@@ -5,11 +5,16 @@ const AUTH = 'api/auth'
 
 class AuthService {
     /**
-     * Gets necessary information for application receipt
+     * Registers a user
+     * @param {*} user the user to be registered
      */
     static registerUser(user) {
         return axios.post(USER, user)
     }
+    /**
+     * authenticates a user
+     * @param {*} user the user credentials to authenticate
+     */
     static loginUser(user) {
         return axios.post(AUTH, user)
         .then(response => {
